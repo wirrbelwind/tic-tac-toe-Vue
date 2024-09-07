@@ -1,4 +1,4 @@
-type Mark = 'cross' | 'zero'
+export type Mark = 'cross' | 'zero'
 
 export interface Player {
   name: string
