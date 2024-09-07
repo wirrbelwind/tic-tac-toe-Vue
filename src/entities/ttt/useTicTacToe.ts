@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { GameSettings, GameState } from './types'
+import { GameSettings, GameState, GameStatus } from './types'
 
 export const useTicTacToe = defineStore(
   'tic-tac-toe',
@@ -9,13 +9,11 @@ export const useTicTacToe = defineStore(
       settings: null
     }),
     actions: {
-      startGame(newSettings: GameSettings) {
+      setSettings(newSettings: GameSettings) {
         this.settings = newSettings
-        this.status = 'inProgress'
       },
-
-      endGame() {
-        this.status = 'finished'
+      setStatus(newStatus: GameStatus) {
+        this.status = newStatus
       }
     },
   }

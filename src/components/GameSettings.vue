@@ -20,12 +20,13 @@ const settings = ref<GameSettings>({
 
 const randomizeMarks = ref(false)
 
-const onSubmit = () => {
+const onStartGame = () => {
   if (randomizeMarks.value && Math.random() > 0.5) {
     onSwapMarks()
   }
 
-  ttt.startGame(settings.value)
+  ttt.setSettings(settings.value)
+  ttt.setStatus('inProgress')
 }
 
 const onSwapMarks = () => {
@@ -101,7 +102,7 @@ const onSwapMarks = () => {
 
 
         <div class="card-actions">
-          <button @click="onSubmit" class="btn btn-primary w-full">
+          <button @click="onStartGame" class="btn btn-primary w-full">
             SUBMIT
           </button>
         </div>
