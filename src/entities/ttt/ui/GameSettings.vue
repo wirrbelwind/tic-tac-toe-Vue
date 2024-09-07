@@ -84,7 +84,7 @@ const swapButtonClasses = computed(() => ({
           </div>
           <div class="flex">
             <label class="input input-bordered flex items-center gap-2">
-              <UserIcon/>
+              <UserIcon />
 
               <input v-model="settings.player2.name" type="text" class="grow" placeholder="Player 1" />
             </label>
@@ -121,11 +121,11 @@ const swapButtonClasses = computed(() => ({
             SUBMIT
           </button>
         </div>
-      </div>
-    </div>
 
-    <div v-if="errorList.length">
-      <div v-for="error in errorList">{{ error }}</div>
+        <div v-if="errorList.length">
+          <div v-for="error in errorList">{{ error }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
