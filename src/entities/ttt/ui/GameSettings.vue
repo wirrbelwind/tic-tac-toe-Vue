@@ -23,8 +23,18 @@ const settings = ref<GameSettings>({
 })
 
 const randomizeMarks = ref(false)
+const errorList = ref<string[]>([])
 
 const onStartGame = () => {
+  errorList.value = []
+
+  const { isValidated, errors } = validateSettings(settings.value)
+
+  if (!isValidated) {
+    errorList.value = errors
+    return
+  }
+
   if (randomizeMarks.value && Math.random() > 0.5) {
     onSwapMarks()
   }
@@ -111,6 +121,10 @@ const onSwapMarks = () => {
           </button>
         </div>
       </div>
+    </div>
+
+    <div v-if="errorList.length">
+      <div v-for="error in errorList">{{ error }}</div>
     </div>
   </div>
 </template>
