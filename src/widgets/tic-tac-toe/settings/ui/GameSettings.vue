@@ -2,10 +2,11 @@
 import { ref } from 'vue'
 import { MAX_BOARD_SIZE, MIN_BOARD_SIZE } from '@/entities/ttt/constants'
 import { GameSettings } from '@/entities/ttt/types';
-import DiceIcon from '@/shared/assets/dice.svg';
-import SwapIcon from '@/shared/assets/swap.svg';
-import UserIcon from '@/shared/assets/user.svg'
 import { MarkIcon, useTicTacToe, validateSettings } from '@/entities/ttt';
+import PlayerInput from './PlayerInput.vue';
+import BoardSizeSelector from './BoardSizeSelector.vue';
+import RandomizerCheckbox from './RandomizerCheckbox.vue';
+import MarkSelector from './MarkSelector.vue';
 
 const ttt = useTicTacToe()
 
@@ -53,11 +54,7 @@ const onSwapMarks = () => {
     ]
 }
 
-const swapButtonClasses = computed(() => ({
-  "cursor-pointer": !randomizeMarks.value,
-  "tooltip tooltip-bottom": randomizeMarks.value,
-  "cursor-not-allowed": randomizeMarks.value,
-}))
+
 
 </script>
 
@@ -66,51 +63,19 @@ const swapButtonClasses = computed(() => ({
     <div class="card bg-base-100 w-[50rem] shadow-xl">
       <div class="card-body">
         <p class="card-title">Create a game</p>
-        <div>
-          <input type="range" :min="MIN_BOARD_SIZE" :max="MAX_BOARD_SIZE" v-model="settings.boardSize" class="range"
-            step="1" />
-          <div class="flex w-full justify-between px-2 text-xs">
-            <span v-for="n in MAX_BOARD_SIZE - MIN_BOARD_SIZE + 1" :key="n">{{ n + 2 }}</span>
-          </div>
-        </div>
+        <BoardSizeSelector v-model:board-size="settings.boardSize" />
 
         <div class="flex justify-between">
-          <div class="flex">
-            <label class="input input-bordered flex items-center gap-2">
-              <UserIcon />
-              <input v-model="settings.player1.name" type="text" class="grow" placeholder="Player 1" />
-            </label>
-          </div>
-          <div class="flex">
-            <label class="input input-bordered flex items-center gap-2">
-              <UserIcon />
-
-              <input v-model="settings.player2.name" type="text" class="grow" placeholder="Player 1" />
-            </label>
-          </div>
+          <PlayerInput v-model:input="settings.player1.name" />
+          <PlayerInput v-model:input="settings.player2.name" />
         </div>
 
         <div>
           <div>
-            <div class="flex w-full justify-between ">
-              <MarkIcon :mark="settings.player1.mark" width="50" height="50" />
-              <button @click="onSwapMarks()" :disabled="randomizeMarks" data-tip="Randomizer enabled"
-                :class="swapButtonClasses">
 
-                <div>SWAP</div>
-                <SwapIcon height="100" width="100" />
-              </button>
-              <MarkIcon :mark="settings.player2.mark" width="50" height="50" />
-            </div>
-
-            <div class="form-control">
-              <label class="label cursor-pointer block">
-                <DiceIcon width="100" height="100" :fill="randomizeMarks ? 'red' : 'black'" />
-                <div class="label-text">Random</div>
-
-                <input type="checkbox" v-model="randomizeMarks" class="hidden" />
-              </label>
-            </div>
+            <MarkSelector :player1="settings.player1.mark" :player2="settings.player2.mark" @on-swap="onSwapMarks()"
+              :randomize-marks="randomizeMarks" />
+            <RandomizerCheckbox v-model:randomizer="randomizeMarks" />
           </div>
         </div>
 
