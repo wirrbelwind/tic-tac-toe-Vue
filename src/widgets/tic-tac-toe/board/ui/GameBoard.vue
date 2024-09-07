@@ -5,4 +5,5 @@ import { useTicTacToe } from '@/entities/ttt';
 
 <template>
   board
+  {{ JSON.stringify(ttt.board) }}
 </template>

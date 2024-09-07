@@ -39,6 +39,7 @@ const onStartGame = () => {
   }
 
   ttt.setSettings(settings.value)
+  ttt.initBoard()
   ttt.setStatus('inProgress')
 }
 
