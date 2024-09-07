@@ -53,6 +53,12 @@ const onSwapMarks = () => {
     ]
 }
 
+const swapButtonClasses = computed(() => ({
+  "cursor-pointer": !randomizeMarks.value,
+  "tooltip tooltip-bottom": randomizeMarks.value,
+  "cursor-not-allowed": randomizeMarks.value,
+}))
+
 </script>
 
 <template>
@@ -95,8 +101,8 @@ const onSwapMarks = () => {
           <div>
             <div class="flex w-full justify-between ">
               <MarkIcon :mark="settings.player1.mark" width="50" height="50" />
-              <button @click="onSwapMarks()" :disabled="randomizeMarks"
-                :class="randomizeMarks ? 'cursor-not-allowed' : 'cursor-pointer'">
+              <button @click="onSwapMarks()" :disabled="randomizeMarks" data-tip="Randomizer enabled" :class="swapButtonClasses">
+
                 <div>SWAP</div>
                 <SwapIcon height="100" width="100" />
               </button>
