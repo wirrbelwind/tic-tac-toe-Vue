@@ -18,12 +18,17 @@ const settings = ref<GameSettings>({
   },
 })
 
+const randomizeMarks = ref(false)
 
 const onSubmit = () => {
+  if (randomizeMarks.value && Math.random() > 0.5) {
+    onSwapMarks()
+  }
 
+  ttt.startGame(settings.value)
 }
 
-const onSwitchMarks = () => {
+const onSwapMarks = () => {
   [
     settings.value.player1.mark,
     settings.value.player2.mark
@@ -78,11 +83,17 @@ const onSwitchMarks = () => {
                 {{ settings.player1.mark }}
               </div>
 
-              <button @click="onSwitchMarks()">SWITCH</button>
+              <button @click="onSwapMarks()">SWITCH</button>
 
               <div>
                 {{ settings.player2.mark }}
               </div>
+            </div>
+            <div class="form-control">
+              <label class="label cursor-pointer justify-normal gap-2">
+                <span class="label-text">Random</span>
+                <input type="checkbox" v-model="randomizeMarks" class="checkbox" />
+              </label>
             </div>
           </div>
 
