@@ -8,6 +8,7 @@ import VueRouter from 'unplugin-vue-router/vite'
 // Utilities
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
+import svgLoader from 'vite-svg-loader'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -38,6 +39,7 @@ export default defineConfig({
         }],
       },
     }),
+    svgLoader()
   ],
   define: { 'process.env': {} },
   resolve: {
