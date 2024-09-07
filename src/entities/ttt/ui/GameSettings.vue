@@ -4,6 +4,9 @@ import { MAX_BOARD_SIZE, MIN_BOARD_SIZE } from '@/entities/ttt/constants'
 import { useTicTacToe } from '@/entities/ttt/useTicTacToe'
 import { GameSettings } from '@/entities/ttt/types';
 import MarkIcon from './MarkIcon.vue';
+import DiceIcon from '@/shared/assets/dice.svg';
+import SwapIcon from '@/shared/assets/swap.svg';
+import { validateSettings } from './helpers/validateSettings';
 
 const ttt = useTicTacToe()
 
@@ -81,31 +84,24 @@ const onSwapMarks = () => {
         <div>
           <div>
             <div class="flex w-full justify-between ">
-
-              <div>
-                <div>
-                {{ settings.player1.mark }}
-              </div>
-                <MarkIcon :mark="settings.player1.mark" width="50" height="50"/>
-              </div>
-
-              <button @click="onSwapMarks()">SWITCH</button>
-
-              <div>
-                <div>
-                {{ settings.player2.mark }}
-              </div>
-                <MarkIcon :mark="settings.player2.mark" width="50" height="50"/>
-              </div>
+              <MarkIcon :mark="settings.player1.mark" width="50" height="50" />
+              <button @click="onSwapMarks()" :disabled="randomizeMarks"
+                :class="randomizeMarks ? 'cursor-not-allowed' : 'cursor-pointer'">
+                <div>SWAP</div>
+                <SwapIcon height="100" width="100" />
+              </button>
+              <MarkIcon :mark="settings.player2.mark" width="50" height="50" />
             </div>
+
             <div class="form-control">
-              <label class="label cursor-pointer justify-normal gap-2">
-                <span class="label-text">Random</span>
-                <input type="checkbox" v-model="randomizeMarks" class="checkbox" />
+              <label class="label cursor-pointer block">
+                <DiceIcon width="100" height="100" :fill="randomizeMarks ? 'red' : 'black'" />
+                <div class="label-text">Random</div>
+
+                <input type="checkbox" v-model="randomizeMarks" class="hidden" />
               </label>
             </div>
           </div>
-
         </div>
 
 
