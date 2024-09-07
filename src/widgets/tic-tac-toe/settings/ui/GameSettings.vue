@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { MAX_BOARD_SIZE, MIN_BOARD_SIZE } from '@/entities/ttt/constants'
-import { useTicTacToe } from '@/entities/ttt/useTicTacToe'
 import { GameSettings } from '@/entities/ttt/types';
-import MarkIcon from './MarkIcon.vue';
 import DiceIcon from '@/shared/assets/dice.svg';
 import SwapIcon from '@/shared/assets/swap.svg';
-import { validateSettings } from '../../../../entities/ttt/ui/helpers/validateSettings';
 import UserIcon from '@/shared/assets/user.svg'
+import { MarkIcon, useTicTacToe, validateSettings } from '@/entities/ttt';
 
 const ttt = useTicTacToe()
 

@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { useTicTacToe } from '@/entities/ttt/useTicTacToe'
-import { GameStatus } from '@/entities/ttt/types'
-import GameSettings from '@/entities/ttt/ui/GameSettings.vue';
-import GameBoard from '@/entities/ttt/ui/GameBoard.vue';
-import GameResults from '@/entities/ttt/ui/GameResults.vue';
+import { GameStatus, useTicTacToe } from '@/entities/ttt';
+import { GameBoard } from '@/widgets/tic-tac-toe/board';
+import { GameResults } from '@/widgets/tic-tac-toe/result';
+import { GameSettings } from '@/widgets/tic-tac-toe/settings';
+import type { Component } from 'vue';
+
 
 const ttt = useTicTacToe()
 
-const gameSteps: Record<GameStatus, any> = {
+const gameSteps: Record<GameStatus, Component> = {
   idle: GameSettings,
   inProgress: GameBoard,
   finished: GameResults,
 }
-
 </script>
 
 <template>

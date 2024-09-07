@@ -1,5 +1,5 @@
-import { MAX_BOARD_SIZE, MIN_BOARD_SIZE } from "../../constants";
-import { GameSettings, ValidationResult } from "../../types";
+import { MAX_BOARD_SIZE, MIN_BOARD_SIZE } from "../constants"
+import { GameSettings, ValidationResult } from "../types"
 
 export const validateSettings = (settings: GameSettings): ValidationResult => {
   const result: ValidationResult = {
