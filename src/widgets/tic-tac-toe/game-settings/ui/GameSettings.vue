@@ -6,7 +6,7 @@ import { GameSettings } from '@/entities/ttt/types';
 import MarkIcon from './MarkIcon.vue';
 import DiceIcon from '@/shared/assets/dice.svg';
 import SwapIcon from '@/shared/assets/swap.svg';
-import { validateSettings } from './helpers/validateSettings';
+import { validateSettings } from '../../../../entities/ttt/ui/helpers/validateSettings';
 import UserIcon from '@/shared/assets/user.svg'
 
 const ttt = useTicTacToe()
