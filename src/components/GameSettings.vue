@@ -22,6 +22,17 @@ const settings = ref<GameSettings>({
 const onSubmit = () => {
 
 }
+
+const onSwitchMarks = () => {
+  [
+    settings.value.player1.mark,
+    settings.value.player2.mark
+  ] = [
+      settings.value.player2.mark,
+      settings.value.player1.mark
+    ]
+}
+
 </script>
 
 <template>
@@ -59,6 +70,25 @@ const onSubmit = () => {
             </label>
           </div>
         </div>
+
+        <div>
+          <div>
+            <div class="flex w-full justify-between ">
+              <div>
+                {{ settings.player1.mark }}
+              </div>
+
+              <button @click="onSwitchMarks()">SWITCH</button>
+
+              <div>
+                {{ settings.player2.mark }}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
         <div class="card-actions">
           <button @click="onSubmit" class="btn btn-primary w-full">
             SUBMIT
