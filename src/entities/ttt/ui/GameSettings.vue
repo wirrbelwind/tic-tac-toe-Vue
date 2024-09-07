@@ -7,6 +7,7 @@ import MarkIcon from './MarkIcon.vue';
 import DiceIcon from '@/shared/assets/dice.svg';
 import SwapIcon from '@/shared/assets/swap.svg';
 import { validateSettings } from './helpers/validateSettings';
+import UserIcon from '@/shared/assets/user.svg'
 
 const ttt = useTicTacToe()
 
@@ -77,21 +78,14 @@ const swapButtonClasses = computed(() => ({
         <div class="flex justify-between">
           <div class="flex">
             <label class="input input-bordered flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                class="h-4 w-4 opacity-70">
-                <path
-                  d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-              </svg>
+              <UserIcon />
               <input v-model="settings.player1.name" type="text" class="grow" placeholder="Player 1" />
             </label>
           </div>
           <div class="flex">
             <label class="input input-bordered flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                class="h-4 w-4 opacity-70">
-                <path
-                  d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-              </svg>
+              <UserIcon/>
+
               <input v-model="settings.player2.name" type="text" class="grow" placeholder="Player 1" />
             </label>
           </div>
@@ -101,7 +95,8 @@ const swapButtonClasses = computed(() => ({
           <div>
             <div class="flex w-full justify-between ">
               <MarkIcon :mark="settings.player1.mark" width="50" height="50" />
-              <button @click="onSwapMarks()" :disabled="randomizeMarks" data-tip="Randomizer enabled" :class="swapButtonClasses">
+              <button @click="onSwapMarks()" :disabled="randomizeMarks" data-tip="Randomizer enabled"
+                :class="swapButtonClasses">
 
                 <div>SWAP</div>
                 <SwapIcon height="100" width="100" />
