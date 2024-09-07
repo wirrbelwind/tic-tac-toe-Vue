@@ -17,3 +17,8 @@ export interface GameSettings {
   player1: Player
   player2: Player
 }
+
+export interface ValidationResult {
+  errors: string[]
+  isValidated: boolean
+}
