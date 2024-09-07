@@ -4,10 +4,10 @@ import CrossIcon from '@/shared/assets/cross.svg'
 import ZeroIcon from '@/shared/assets/zero.svg'
 import { SVGAttributes } from 'vue';
 
-interface Props {
+interface Props extends /* @vue-ignore */ SVGAttributes {
   mark: Mark
 }
-const { mark } = defineProps<Props & SVGAttributes>()
+const { mark } = defineProps<Props>()
 
 const icons: Record<Mark, string> = {
   'cross': CrossIcon,
