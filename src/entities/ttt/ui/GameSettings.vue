@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { MAX_BOARD_SIZE, MIN_BOARD_SIZE } from '@/entities/ttt/constants'
 import { useTicTacToe } from '@/entities/ttt/useTicTacToe'
 import { GameSettings } from '@/entities/ttt/types';
+import MarkIcon from './MarkIcon.vue';
 
 const ttt = useTicTacToe()
 
@@ -80,14 +81,21 @@ const onSwapMarks = () => {
         <div>
           <div>
             <div class="flex w-full justify-between ">
+
               <div>
+                <div>
                 {{ settings.player1.mark }}
+              </div>
+                <MarkIcon :mark="settings.player1.mark" width="50" height="50"/>
               </div>
 
               <button @click="onSwapMarks()">SWITCH</button>
 
               <div>
+                <div>
                 {{ settings.player2.mark }}
+              </div>
+                <MarkIcon :mark="settings.player2.mark" width="50" height="50"/>
               </div>
             </div>
             <div class="form-control">
