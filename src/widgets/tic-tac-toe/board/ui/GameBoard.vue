@@ -15,37 +15,92 @@ const boardStyles = computed(() => ({
 }))
 
 $subscribe((mutation, state) => {
-  const {board} = state
+  const { board } = state
   if (!board) {
+    return
+  }
+
+  // diagonal to low
+  const isLowDiagonalWinPossible = board[0][0] !== null
+  if (isLowDiagonalWinPossible) {
+    const firstCellMark = board[0][0] as Mark
+    let isWinner = true
+
+    for (let position = 0; position < board.length; position++) {
+      if (board[position][position] !== firstCellMark) {
+        isWinner = false
+        break
+      }
+    }
+    if (isWinner) {
+      winnerState.value = firstCellMark
       return
     }
+  }
 
+  // diagonal to up
+  const isHighDiagonalWinPossible = board[0][board.length - 1] !== null
+  if (isHighDiagonalWinPossible) {
+    const firstCellMark = board[0][board.length - 1] as Mark
+    let isWinner = true
 
-    // horizontal
-    for (let row = 0; row < board.length; row++) {
-      if (!board[row][0]) {
-        continue
-      }
-
-      const firstCellMark = board[row][0] as Mark
-      let isWinner = true
-
-      for (let col = 1; col < board.length; col++) {
-        if (board[row][col] !== firstCellMark) {
-          isWinner = false
-          break
-        }
-      }
-
-      if (isWinner) {
-        winnerState.value = firstCellMark
+    for (let position = 0; position < board.length; position++) {
+      if (board[position][board.length - 1 - position] !== firstCellMark) {
+        isWinner = false
+        break
       }
     }
-    // for (let row = 0; row < board.length; row++) {
-    //   for (let col = 0; col < board.length; col++) {
 
-    //   }
-    // }
+    if (isWinner) {
+      winnerState.value = firstCellMark
+      return
+    }
+  }
+
+
+  // horizontal
+  for (let row = 0; row < board.length; row++) {
+    if (!board[row][0]) {
+      continue
+    }
+
+    const firstCellMark = board[row][0] as Mark
+    let isWinner = true
+
+    for (let col = 1; col < board.length; col++) {
+      if (board[row][col] !== firstCellMark) {
+        isWinner = false
+        break
+      }
+    }
+
+    if (isWinner) {
+      winnerState.value = firstCellMark
+      return
+    }
+  }
+
+  // vertical
+  for (let col = 0; col < board.length; col++) {
+    if (!board[0][col]) {
+      continue
+    }
+
+    const firstCellMark = board[0][col] as Mark
+    let isWinner = true
+
+    for (let row = 1; row < board.length; row++) {
+      if (board[row][col] !== firstCellMark) {
+        isWinner = false
+        break
+      }
+    }
+
+    if (isWinner) {
+      winnerState.value = firstCellMark
+      return
+    }
+  }
 })
 
 </script>
