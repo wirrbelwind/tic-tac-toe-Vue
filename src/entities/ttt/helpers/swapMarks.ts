@@ -1,7 +1,7 @@
 import { Mark, Players } from "../types";
 
 export const swapMarks = (players: Players) => {
-  const playersCopy = structuredClone(players);
+  const playersCopy = { ...players };
 
   [
     playersCopy.first.mark,
