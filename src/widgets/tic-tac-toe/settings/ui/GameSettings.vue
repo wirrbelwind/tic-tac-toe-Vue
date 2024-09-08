@@ -54,7 +54,7 @@ const onSwapMarks = () => {
 
         <div>
           <div>
-            <MarkSelector :player1="settings.players.first.mark" :player2="settings.players.first.mark"
+            <MarkSelector :player1="settings.players.first.mark" :player2="settings.players.second.mark"
               @on-swap="onSwapMarks()" :randomize-marks="randomizeMarks" />
             <RandomizerCheckbox v-model:randomizer="randomizeMarks" />
           </div>
