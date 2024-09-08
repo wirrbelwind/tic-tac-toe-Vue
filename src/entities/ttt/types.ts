@@ -1,5 +1,9 @@
 export type Mark = 'cross' | 'zero'
 
+export interface Players {
+  first: Player
+  second: Player
+}
 export interface Player {
   name: string
   mark: Mark
@@ -11,12 +15,13 @@ export interface GameState {
   status: GameStatus
   settings: GameSettings | null
   board: Board | null
+  currentMark: Mark | null
+  errorList: string[]
 }
 
 export interface GameSettings {
   boardSize: number
-  player1: Player
-  player2: Player
+  players: Players
 }
 
 export interface ValidationResult {

@@ -7,54 +7,36 @@ import PlayerInput from './PlayerInput.vue';
 import BoardSizeSelector from './BoardSizeSelector.vue';
 import RandomizerCheckbox from './RandomizerCheckbox.vue';
 import MarkSelector from './MarkSelector.vue';
+import { swapMarks } from '@/entities/ttt/helpers/swapMarks';
 
-const ttt = useTicTacToe()
+const {
+  startGame
+} = useTicTacToe()
 
 const settings = ref<GameSettings>({
   boardSize: MIN_BOARD_SIZE,
-  player1: {
-    mark: 'cross',
-    name: ''
-  },
-  player2: {
-    mark: 'zero',
-    name: ''
-  },
+  players: {
+    first: {
+      mark: 'cross',
+      name: '1'
+    },
+    second: {
+      mark: 'zero',
+      name: '2'
+    }
+  }
 })
 
 const randomizeMarks = ref(false)
 const errorList = ref<string[]>([])
 
-const onStartGame = () => {
-  errorList.value = []
-
-  const { isValidated, errors } = validateSettings(settings.value)
-
-  if (!isValidated) {
-    errorList.value = errors
-    return
-  }
-
-  if (randomizeMarks.value && Math.random() > 0.5) {
-    onSwapMarks()
-  }
-
-  ttt.setSettings(settings.value)
-  ttt.initBoard()
-  ttt.setStatus('inProgress')
+const onSubmit = () => {
+  startGame(settings.value, randomizeMarks.value, 'cross')
 }
 
 const onSwapMarks = () => {
-  [
-    settings.value.player1.mark,
-    settings.value.player2.mark
-  ] = [
-      settings.value.player2.mark,
-      settings.value.player1.mark
-    ]
+  settings.value.players = swapMarks(settings.value.players)
 }
-
-
 
 </script>
 
@@ -66,22 +48,21 @@ const onSwapMarks = () => {
         <BoardSizeSelector v-model:board-size="settings.boardSize" />
 
         <div class="flex justify-between">
-          <PlayerInput v-model:input="settings.player1.name" />
-          <PlayerInput v-model:input="settings.player2.name" />
+          <PlayerInput v-model:input="settings.players.first.name" />
+          <PlayerInput v-model:input="settings.players.second.name" />
         </div>
 
         <div>
           <div>
-
-            <MarkSelector :player1="settings.player1.mark" :player2="settings.player2.mark" @on-swap="onSwapMarks()"
-              :randomize-marks="randomizeMarks" />
+            <MarkSelector :player1="settings.players.first.mark" :player2="settings.players.first.mark"
+              @on-swap="onSwapMarks()" :randomize-marks="randomizeMarks" />
             <RandomizerCheckbox v-model:randomizer="randomizeMarks" />
           </div>
         </div>
 
 
         <div class="card-actions">
-          <button @click="onStartGame" class="btn btn-primary w-full">
+          <button type="submit" @click="onSubmit" class="btn btn-primary w-full">
             SUBMIT
           </button>
         </div>

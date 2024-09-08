@@ -17,22 +17,22 @@ export const validateSettings = (settings: GameSettings): ValidationResult => {
     result.isValidated = false
   }
 
-  if (!settings.player1.name) {
+  if (!settings.players.first.name) {
     result.errors.push('!settings.player1.name')
     result.isValidated = false
   }
 
-  if (!settings.player2.name) {
+  if (!settings.players.second.name) {
     result.errors.push('!settings.player2.name')
     result.isValidated = false
   }
 
-  if (settings.player1.name === settings.player2.name) {
+  if (settings.players.first.name === settings.players.second.name) {
     result.errors.push('settings.player1.name === settings.player2.name')
     result.isValidated = false
   }
 
-  if (settings.player1.mark === settings.player2.mark) {
+  if (settings.players.first.mark === settings.players.second.mark) {
     result.errors.push('settings.player1.mark === settings.player2.mark')
     result.isValidated = false
   }
