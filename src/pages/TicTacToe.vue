@@ -11,7 +11,7 @@ const ttt = useTicTacToe()
 const gameSteps: Record<GameStatus, Component> = {
   idle: GameSettings,
   inProgress: GameBoard,
-  finished: GameResults,
+  finished: GameBoard,
 }
 </script>
 
