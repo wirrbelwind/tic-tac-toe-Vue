@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { BoardCell, GameSettings, GameState, GameStatus, Mark, Player } from '../types'
+import { BoardCell, GameSettings, GameState, GameStatus, Mark, Player, Winner } from '../types'
 import { MAX_BOARD_SIZE, MIN_BOARD_SIZE } from '../constants'
 import { validateSettings } from '../helpers/validateSettings'
 import { swapMarks } from '../helpers/swapMarks'
@@ -13,8 +13,10 @@ export const useTicTacToe = defineStore(
       settings: null,
       board: null,
       currentMark: null,
-      errorList: []
+      errorList: [],
+      winner: null,
     }),
+
     actions: {
       startGame(
         newSettings: GameSettings,
@@ -71,6 +73,11 @@ export const useTicTacToe = defineStore(
         }
       },
 
+      endGame(winner: Winner) {
+        this.winner = winner
+        this.status = 'finished'
+      }
     },
+
   }
 )
