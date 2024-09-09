@@ -17,6 +17,7 @@ export interface GameState {
   board: Board | null
   currentMark: Mark | null
   errorList: string[]
+  winner: Winner | null
 }
 
 export interface GameSettings {
@@ -32,3 +33,11 @@ export interface ValidationResult {
 export type Board = BoardCell[][]
 
 export type BoardCell = Mark | null
+
+export interface Winner {
+  winnerMark: Mark
+  line: {
+    type: 'row' | 'column' | 'diagonal'
+    index: number
+  }
+}
