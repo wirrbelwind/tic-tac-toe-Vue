@@ -41,7 +41,6 @@ const onSwapMarks = () => {
 </script>
 
 <template>
-  <div class="flex justify-center items-center h-[100dvh]">
     <div class="card bg-base-100 w-[50rem] shadow-xl">
       <div class="card-body">
         <p class="card-title">Create a game</p>
@@ -72,5 +71,4 @@ const onSwapMarks = () => {
         </div>
       </div>
     </div>
-  </div>
 </template>

@@ -1,6 +1,7 @@
-import { Board, Mark, Winner } from "../types"
+import { Board, Mark, Players, Winner } from "../types"
+import { findPlayerByMark } from "./findPlayerByMark"
 
-export const getWinner = (board: Board): Winner | null => {
+export const findWinner = (board: Board, players: Players): Winner | null => {
   const size = board.length
   let lowDiagonalWinPossible = true
   let highDiagonalWinPossible = true
@@ -20,8 +21,9 @@ export const getWinner = (board: Board): Winner | null => {
       }
       if (isWinner) {
         return {
-          winnerMark: firstCellMark,
-          line: { type: 'row', index: i }
+          playerSlot: findPlayerByMark(players, firstCellMark),
+          type: 'row',
+          index: i
         }
       }
     }
@@ -38,8 +40,9 @@ export const getWinner = (board: Board): Winner | null => {
       }
       if (isWinner) {
         return {
-          winnerMark: firstCellMark,
-          line: { type: 'column', index: i }
+          playerSlot: findPlayerByMark(players, firstCellMark),
+          type: 'column',
+          index: i
         }
       }
     }
@@ -57,15 +60,17 @@ export const getWinner = (board: Board): Winner | null => {
 
   if (lowDiagonalWinPossible && firstLowDiagonalMark !== null) {
     return {
-      winnerMark: firstLowDiagonalMark as Mark,
-      line: { type: 'diagonal', index: 0 }
+      playerSlot: findPlayerByMark(players, firstLowDiagonalMark),
+      type: 'diagonal',
+      index: 0
     }
   }
 
   if (highDiagonalWinPossible && firstHighDiagonalMark !== null) {
     return {
-      winnerMark: firstHighDiagonalMark as Mark,
-      line: { type: 'diagonal', index: 1 }
+      playerSlot: findPlayerByMark(players, firstHighDiagonalMark),
+      type: 'diagonal',
+      index: 1
     }
   }
 

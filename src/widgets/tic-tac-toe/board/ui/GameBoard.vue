@@ -1,56 +1,80 @@
 <script lang="ts" setup>
-import { Mark, MAX_BOARD_SIZE, MIN_BOARD_SIZE, useTicTacToe, MarkIcon } from '@/entities/ttt';
-import { getWinner } from '@/entities/ttt/helpers/getWinner';
+import { useTicTacToe, MarkIcon } from '@/entities/ttt';
+import { findWinner } from '@/entities/ttt/helpers/findWinner';
+
 import { storeToRefs } from 'pinia';
 const store = useTicTacToe()
 const {
   settings,
   board,
-  currentMark,
   makeTurn,
   $subscribe,
   endGame,
 } = store
-const { winner } = storeToRefs(store)
+const { winner, currentMark } = storeToRefs(store)
 
-console.log('winner updated', winner)
 const boardStyles = computed(() => ({
   gridTemplateColumns: `repeat(${settings?.boardSize}, minmax(0, 10rem))`
 }))
 
 $subscribe((mutation, state) => {
-  if (mutation.type !== 'direct' || mutation.events.key !== 'currentMark') {
+  const boardIsNotMutated = mutation.type !== 'direct' || mutation.events.key !== 'currentMark'
+  if (boardIsNotMutated) {
     return
   }
 
   const { board } = state
-  if (!board) {
+  if (!board || !settings) {
     return
   }
 
-  const winner = getWinner(board)
-  console.log(winner)
-  if (winner) {
-    console.log('set winner')
-    1
-    endGame(winner)
+  const foundWInner = findWinner(board, settings.players)
+  console.log(foundWInner)
+  if (foundWInner) {
+    endGame(foundWInner)
   }
 })
-
-
 
 </script>
 
 <template>
-  <div v-if="winner">{{ JSON.stringify(winner) }}</div>
-  <div class="grid gap-0" :style="boardStyles">
-    <template v-for="row, i in board">
-      <template :key="`${i}:${k}`" v-for="col, k in row">
-        <button type="button" @click="makeTurn(i, k)"
-          class="size-10  w-full h-40 shadow-inner shadow-lg flex justify-center items-center">
-          <MarkIcon v-if="board[i][k]" :mark="board[i][k]" width="5rem" height="5rem" />
-        </button>
+  <div class="flex flex-col gap-10">
+    <div class="basis-80 shrink-0"></div>
+    <div v-if="currentMark && !winner" class="flex gap-2 items-center justify-center">
+      <Transition name="fade">
+        <MarkIcon :mark="currentMark" width="50" height="50" />
+      </Transition>
+
+      <p class="text-4xl">'s turn</p>
+    </div>
+
+    <Transition name="fade">
+      <div v-if="winner">
+        <p>{{ JSON.stringify(winner) }}</p>
+      </div>
+    </Transition>
+
+    <div class="grid gap-0" :style="boardStyles">
+      <template v-for="row, i in board">
+        <template :key="`${i}:${k}`" v-for="col, k in row">
+          <button type="button" @click="makeTurn(i, k)"
+            class="size-10  w-full h-40 shadow-inner shadow-xl flex justify-center items-center">
+            <MarkIcon v-if="board[i][k]" :mark="board[i][k]" width="5rem" height="5rem" />
+          </button>
+        </template>
       </template>
-    </template>
+    </div>
   </div>
 </template>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

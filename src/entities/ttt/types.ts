@@ -35,9 +35,7 @@ export type Board = BoardCell[][]
 export type BoardCell = Mark | null
 
 export interface Winner {
-  winnerMark: Mark
-  line: {
-    type: 'row' | 'column' | 'diagonal'
-    index: number
-  }
+  playerSlot: keyof Players
+  type: 'row' | 'column' | 'diagonal'
+  index: number
 }

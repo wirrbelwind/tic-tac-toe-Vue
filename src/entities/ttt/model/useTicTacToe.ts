@@ -52,6 +52,10 @@ export const useTicTacToe = defineStore(
       },
 
       makeTurn(rowIndex: number, colIndex: number) {
+        if(this.status !== 'inProgress') {
+          return
+        }
+
         if (!this.board && !this.currentMark) {
           return
         }
