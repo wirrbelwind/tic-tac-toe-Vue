@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia'
-import { BoardCell, GameSettings, GameState, GameStatus, Mark, Player, Winner } from '../types'
-import { MAX_BOARD_SIZE, MIN_BOARD_SIZE } from '../constants'
+import { BoardCell, GameSettings, GameState, Winner } from '../types'
 import { validateSettings } from '../helpers/validateSettings'
 import { swapMarks } from '../helpers/swapMarks'
-import { tSMethodSignature } from '@babel/types'
 
 export const useTicTacToe = defineStore(
   'tic-tac-toe',
@@ -20,8 +18,6 @@ export const useTicTacToe = defineStore(
     actions: {
       startGame(
         newSettings: GameSettings,
-        randomizeMarks: boolean,
-        firstTurnMark: Mark = 'cross',
       ) {
         const { isValidated, errors } = validateSettings(newSettings)
 
@@ -30,7 +26,7 @@ export const useTicTacToe = defineStore(
           return
         }
 
-        const marksShouldBeSwapped = randomizeMarks && Math.random() > 0.5
+        const marksShouldBeSwapped = newSettings.randomizeMarks && Math.random() > 0.5
 
         if (marksShouldBeSwapped) {
           newSettings.players = swapMarks(newSettings.players)
@@ -47,12 +43,13 @@ export const useTicTacToe = defineStore(
         }
         this.board = newBoard
 
-        this.currentMark = firstTurnMark
+        this.currentMark = newSettings.firstTurnMark
+        this.winner = null
         this.status = 'inProgress'
       },
 
       makeTurn(rowIndex: number, colIndex: number) {
-        if(this.status !== 'inProgress') {
+        if (this.status !== 'inProgress') {
           return
         }
 
@@ -80,6 +77,9 @@ export const useTicTacToe = defineStore(
       endGame(winner: Winner) {
         this.winner = winner
         this.status = 'finished'
+      },
+      idleGame() {
+        this.status = 'idle'
       }
     },
 

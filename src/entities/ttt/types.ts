@@ -23,6 +23,8 @@ export interface GameState {
 export interface GameSettings {
   boardSize: number
   players: Players
+  randomizeMarks: boolean
+  firstTurnMark: Mark
 }
 
 export interface ValidationResult {

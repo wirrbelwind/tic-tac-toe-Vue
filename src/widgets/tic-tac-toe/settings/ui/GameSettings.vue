@@ -10,11 +10,14 @@ import MarkSelector from './MarkSelector.vue';
 import { swapMarks } from '@/entities/ttt/helpers/swapMarks';
 
 const {
-  startGame
+  startGame,
+  errorList
 } = useTicTacToe()
 
 const settings = ref<GameSettings>({
   boardSize: MIN_BOARD_SIZE,
+  firstTurnMark: 'cross',
+  randomizeMarks: false,
   players: {
     first: {
       mark: 'cross',
@@ -27,11 +30,8 @@ const settings = ref<GameSettings>({
   }
 })
 
-const randomizeMarks = ref(false)
-const errorList = ref<string[]>([])
-
 const onSubmit = () => {
-  startGame(settings.value, randomizeMarks.value, 'cross')
+  startGame(settings.value)
 }
 
 const onSwapMarks = () => {
@@ -54,8 +54,8 @@ const onSwapMarks = () => {
         <div>
           <div>
             <MarkSelector :player1="settings.players.first.mark" :player2="settings.players.second.mark"
-              @on-swap="onSwapMarks()" :randomize-marks="randomizeMarks" />
-            <RandomizerCheckbox v-model:randomizer="randomizeMarks" />
+              @on-swap="onSwapMarks()" :randomize-marks="settings.randomizeMarks" />
+            <RandomizerCheckbox v-model:randomizer="settings.randomizeMarks" />
           </div>
         </div>
 

@@ -1,17 +1,24 @@
 <script lang="ts" setup>
-import { useTicTacToe, MarkIcon } from '@/entities/ttt';
+import { MarkIcon, useTicTacToe } from '@/entities/ttt';
 import { findWinner } from '@/entities/ttt/helpers/findWinner';
+
+import GameBanner from './GameBanner.vue';
+import Cell from './Cell.vue';
+import RepeatIcon from '@/shared/assets/repeat.svg'
+import ArrowRight from '@/shared/assets/arrow-right.svg'
 
 import { storeToRefs } from 'pinia';
 const store = useTicTacToe()
 const {
   settings,
-  board,
   makeTurn,
   $subscribe,
   endGame,
+  startGame,
+  idleGame,
 } = store
-const { winner, currentMark } = storeToRefs(store)
+
+const { status, board } = storeToRefs(store)
 
 const boardStyles = computed(() => ({
   gridTemplateColumns: `repeat(${settings?.boardSize}, minmax(0, 10rem))`
@@ -29,41 +36,63 @@ $subscribe((mutation, state) => {
   }
 
   const foundWInner = findWinner(board, settings.players)
-  console.log(foundWInner)
   if (foundWInner) {
     endGame(foundWInner)
   }
 })
 
+const repeatClasses = computed(() => ({
+  'opacity-0': status.value === 'inProgress',
+  'opacity-100': status.value === 'finished',
+}))
+
+const repeat = () => {
+  if (status.value !== 'finished') {
+    throw new Error('Trying to repeat unfinished game')
+  }
+
+  if (!settings) {
+    throw new Error('Trying to repeat game without settings')
+  }
+
+  startGame(settings)
+}
+
+const createAnotherGame = () => {
+  idleGame()
+}
+
 </script>
 
 <template>
-  <div class="flex flex-col gap-10">
-    <div class="basis-80 shrink-0"></div>
-    <div v-if="currentMark && !winner" class="flex gap-2 items-center justify-center">
-      <Transition name="fade">
-        <MarkIcon :mark="currentMark" width="50" height="50" />
-      </Transition>
+  <div class="flex gap-20">
 
-      <p class="text-4xl">'s turn</p>
+    <Transition name="fade">
+      <button class="text-2xl" :class="repeatClasses" @click="repeat">
+        <RepeatIcon width="7rem" height="7rem" class="mx-auto"/>
+        <p class="mt-2">Repeat</p>
+      </button>
+    </Transition>
+
+    <div class="flex flex-col gap-10">
+      <GameBanner class="basis-[8rem] shrink-0" />
+
+      <div class="grid aspect-video" :style="boardStyles">
+        <template v-for="row, rowIndex in board">
+          <template :key="`${i}:${k}`" v-for="_, colIndex in row">
+            <Cell :cell="board[rowIndex][colIndex]" @on-turn="makeTurn" :row-index="rowIndex" :col-index="colIndex" />
+          </template>
+        </template>
+      </div>
     </div>
 
     <Transition name="fade">
-      <div v-if="winner">
-        <p>{{ JSON.stringify(winner) }}</p>
-      </div>
+      <button class="text-2xl" :class="repeatClasses" @click="createAnotherGame">
+        <ArrowRight width="7rem" height="7rem" class="mx-auto" />
+        <p class="mt-2">Create another game</p>
+      </button>
     </Transition>
 
-    <div class="grid gap-0" :style="boardStyles">
-      <template v-for="row, i in board">
-        <template :key="`${i}:${k}`" v-for="col, k in row">
-          <button type="button" @click="makeTurn(i, k)"
-            class="size-10  w-full h-40 shadow-inner shadow-xl flex justify-center items-center">
-            <MarkIcon v-if="board[i][k]" :mark="board[i][k]" width="5rem" height="5rem" />
-          </button>
-        </template>
-      </template>
-    </div>
   </div>
 </template>
 
