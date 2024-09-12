@@ -1,5 +1,4 @@
 import { swapMarks } from "@/helpers/swapMarks"
-import { storeToRefs } from "pinia"
 import { useStore } from "./useStore"
 import { GameSettings } from "@/types"
 import { MIN_BOARD_SIZE } from "@/constants"
