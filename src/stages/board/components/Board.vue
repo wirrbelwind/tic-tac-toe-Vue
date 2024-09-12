@@ -5,6 +5,8 @@ import Cell from './Cell.vue';
 import RepeatIcon from '@/assets/repeat.svg'
 import ArrowLeft from '@/assets/arrow-left.svg'
 import { useBoard } from '@/hooks/useBoard';
+import { useStore } from '@/hooks/useStore';
+import { storeToRefs } from 'pinia';
 
 const {
   board,
@@ -12,8 +14,10 @@ const {
   createAnotherGame,
   boardStyles,
   makeTurn,
-  repeat
+  repeat,
 } = useBoard()
+
+const {status} = storeToRefs(useStore())
 
 </script>
 
@@ -22,8 +26,8 @@ const {
     <Banner class="basis-[8rem]" />
 
     <div class="flex gap-10">
-      <Transition name="fade">
-        <button :class="repeatClasses" @click="createAnotherGame">
+      <Transition name="fade" >
+        <button v-if="status === 'finished'" :class="repeatClasses" @click="createAnotherGame">
           <ArrowLeft width="7rem" height="7rem" />
         </button>
       </Transition>
@@ -38,8 +42,8 @@ const {
         </template>
       </div>
 
-      <Transition name="fade">
-        <button :class="repeatClasses" @click="repeat">
+      <Transition name="fade" >
+        <button v-if="status === 'finished'" :class="repeatClasses" @click="repeat">
           <RepeatIcon width="7rem" height="7rem" />
         </button>
       </Transition>
