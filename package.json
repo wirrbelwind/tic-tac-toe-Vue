@@ -1,5 +1,5 @@
 {
-  "name": "ttt",
+  "name": "tic-tac-toe",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
