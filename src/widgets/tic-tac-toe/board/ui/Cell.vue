@@ -17,7 +17,7 @@ const emit = defineEmits(['onTurn'])
 
 <template>
   <button type="button" @click="emit('onTurn', rowIndex, colIndex)"
-    class="size-10  w-full h-40 shadow-inner shadow-md shadow-orange-800 flex justify-center items-center">
+    class="size-10 w-full h-full shadow-inner shadow-md shadow-orange-800 flex justify-center items-center">
     <Transition name="fade">
       <MarkIcon v-if="cell" :mark="cell" width="5rem" height="5rem" />
     </Transition>

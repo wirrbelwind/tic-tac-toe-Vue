@@ -16,7 +16,7 @@ const gameSteps: Record<GameStatus, Component> = {
 </script>
 
 <template>
-  <div class="flex justify-center items-center h-[100dvh]">
+  <div class="flex items-center h-[100dvh] justify-center">
     <component :is="gameSteps[ttt.status]" />
   </div>
 </template>

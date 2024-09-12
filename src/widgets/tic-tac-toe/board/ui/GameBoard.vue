@@ -5,7 +5,7 @@ import { findWinner } from '@/entities/ttt/helpers/findWinner';
 import GameBanner from './GameBanner.vue';
 import Cell from './Cell.vue';
 import RepeatIcon from '@/shared/assets/repeat.svg'
-import ArrowRight from '@/shared/assets/arrow-right.svg'
+import ArrowLeft from '@/shared/assets/arrow-left.svg'
 
 import { storeToRefs } from 'pinia';
 const store = useTicTacToe()
@@ -21,7 +21,8 @@ const {
 const { status, board } = storeToRefs(store)
 
 const boardStyles = computed(() => ({
-  gridTemplateColumns: `repeat(${settings?.boardSize}, minmax(0, 10rem))`
+  gridTemplateColumns: `repeat(${settings?.boardSize}, 1fr`,
+  gridTemplateRows: `repeat(${settings?.boardSize}, 1fr)`
 }))
 
 $subscribe((mutation, state) => {
@@ -65,33 +66,32 @@ const createAnotherGame = () => {
 </script>
 
 <template>
-  <div class="flex gap-20">
+  <div>
+    <GameBanner class="basis-[8rem]" />
 
-    <Transition name="fade">
-      <button class="text-2xl" :class="repeatClasses" @click="repeat">
-        <RepeatIcon width="7rem" height="7rem" class="mx-auto"/>
-        <p class="mt-2">Repeat</p>
-      </button>
-    </Transition>
+    <div class="flex gap-10">
+      <Transition name="fade">
+        <button :class="repeatClasses" @click="createAnotherGame">
+          <ArrowLeft width="7rem" height="7rem" />
+        </button>
+      </Transition>
 
-    <div class="flex flex-col gap-10">
-      <GameBanner class="basis-[8rem] shrink-0" />
-
-      <div class="grid aspect-video" :style="boardStyles">
+      <div class=" justify-self-center grid border w-[100dvw] h-[100dvw] lg:w-[70dvh] lg:h-[70dvh] mt-10"
+        :style="boardStyles">
         <template v-for="row, rowIndex in board">
           <template :key="`${i}:${k}`" v-for="_, colIndex in row">
-            <Cell :cell="board[rowIndex][colIndex]" @on-turn="makeTurn" :row-index="rowIndex" :col-index="colIndex" />
+            <Cell :cell="board[rowIndex][colIndex]" @on-turn="makeTurn" :row-index="rowIndex" :col-index="colIndex"
+              class="" />
           </template>
         </template>
       </div>
-    </div>
 
-    <Transition name="fade">
-      <button class="text-2xl" :class="repeatClasses" @click="createAnotherGame">
-        <ArrowRight width="7rem" height="7rem" class="mx-auto" />
-        <p class="mt-2">Create another game</p>
-      </button>
-    </Transition>
+      <Transition name="fade">
+        <button :class="repeatClasses" @click="repeat">
+          <RepeatIcon width="7rem" height="7rem" />
+        </button>
+      </Transition>
+    </div>
 
   </div>
 </template>

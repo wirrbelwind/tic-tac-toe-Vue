@@ -22,7 +22,7 @@ const bannerClasses = computed(() => ({
 
 <template>
   <div
-    class="text-4xl border border-orange-800 rounded-lg flex items-center justify-center shadow-inner  shadow-orange-800"
+    class="p-3 text-4xl border border-orange-800 rounded-lg flex items-center justify-center shadow-inner  shadow-orange-800"
     :class="bannerClasses">
 
     <div v-if="currentMark && !winner" class="flex gap-2 items-center justify-center">
