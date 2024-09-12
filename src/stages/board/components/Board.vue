@@ -28,7 +28,7 @@ const {
         </button>
       </Transition>
 
-      <div class=" justify-self-center grid border w-[100dvw] h-[100dvw] lg:w-[70dvh] lg:h-[70dvh] mt-10"
+      <div v-if="board" class=" justify-self-center grid border w-[100dvw] h-[100dvw] lg:w-[70dvh] lg:h-[70dvh] mt-10"
         :style="boardStyles">
         <template v-for="row, rowIndex in board">
           <template :key="`${i}:${k}`" v-for="_, colIndex in row">

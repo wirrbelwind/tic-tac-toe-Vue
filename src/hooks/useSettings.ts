@@ -9,10 +9,6 @@ export const useSettings = () => {
   const store = useStore()
   const { startGame } = store
 
-  const {
-    errorList
-  } = storeToRefs(store)
-
   const settings = ref<GameSettings>({
     boardSize: MIN_BOARD_SIZE,
     firstTurnMark: 'cross',
@@ -40,6 +36,6 @@ export const useSettings = () => {
   return {
     settings,
     onSwapMarks,
-    onSubmit
+    onSubmit,
   }
 }

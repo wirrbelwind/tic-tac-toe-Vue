@@ -5,10 +5,6 @@ import { storeToRefs } from 'pinia';
 const store = useStore()
 const {
   settings,
-  board,
-  makeTurn,
-  $subscribe,
-  endGame,
 } = store
 
 const { winner, currentMark } = storeToRefs(store)
